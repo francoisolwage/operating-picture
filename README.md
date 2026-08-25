@@ -4,7 +4,7 @@ Britain's binding constraints. A public diagnosis of the physical slots that thr
 
 Not a hotel map. Not a manifesto tick-list.
 
-Play **Break the Slot** at `/play`: stamp the moving slot with the instrument. Symptoms bounce.
+Play **The Cabinet** at `/play`: one parliament, two moves a year. Play the instrument on the bind. Slogans fill the queue.
 
 ## Run
 
