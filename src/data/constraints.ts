@@ -39,26 +39,43 @@ export const constraints: Constraint[] = [
     status: "tight",
     slot: "The civil service cannot hire, fire, merge, or finish a major project at the speed the rest of the programme requires.",
     hero: {
-      label: "Major projects likely to succeed",
-      value: "11%",
-      detail: "Infrastructure and Projects Authority, 2024. Down from 48% in 2013.",
-      asOf: "2024",
-      source: "IPA annual report, cited in Progress Economy book",
-      href: "https://www.gov.uk/government/organisations/infrastructure-and-projects-authority",
+      label: "Major projects rated Green",
+      value: "15%",
+      detail:
+        "NISTA: 29 of 189 GMPP projects Green at 31 Mar 2026. 34 (18%) Red: successful delivery appears unachievable. 109 Amber. IPA's 2024 'likely to succeed' figure was 11%, down from 48% in 2013.",
+      asOf: "31 Mar 2026",
+      source: "NISTA Major Projects Annual Report 2025-26",
+      href: "https://www.gov.uk/government/news/government-major-projects-demonstrate-strong-foundations-for-delivery",
     },
     throughput: "Finished public projects: nuclear, prisons, hospitals, grid corridors.",
     test: "If we doubled policy papers and left the delivery machine unchanged, would more megawatts, cells, or beds appear? No.",
     why: [
-      "The Progress diagnosis is that sophisticated policy on failing institutional hardware is futile. The machine must be fixed first.",
+      "The Progress diagnosis is that sophisticated policy on failing institutional hardware is futile. The machine must be fixed first. NISTA (end-March 2026): 15% Green, 18% Red, on a £924.2bn whole-life portfolio.",
       "Administrative (front-line) civil service posts have fallen about 45% since 2010 while policy-oriented senior grades have swollen: more people writing, fewer people implementing.",
       "About 20% of Senior Civil Service appointments come from outside government. The service is hard to enter and harder to leave for failure.",
       "The Public Accounts Committee has described public procurement as littered with waste, failure, and bad value. Annual procurement is about £400bn.",
     ],
     metrics: [
       {
+        label: "NISTA Green share",
+        value: "15%",
+        detail: "29 of 189 GMPP projects. Snapshot before the April 2026 reset to 81 projects.",
+        asOf: "31 Mar 2026",
+        source: "NISTA / GOV.UK",
+        href: "https://www.gov.uk/government/news/government-major-projects-demonstrate-strong-foundations-for-delivery",
+      },
+      {
+        label: "NISTA Red share",
+        value: "18%",
+        detail: "34 projects. Highways Magazine: about £244bn of £924.2bn whole-life cost.",
+        asOf: "31 Mar 2026",
+        source: "NISTA Major Projects Annual Report 2025-26",
+        href: "https://www.gov.uk/government/publications/nista-major-projects-annual-report-2025-26",
+      },
+      {
         label: "IPA success confidence",
         value: "11%",
-        detail: "Share of the Government Major Projects Portfolio rated likely to succeed.",
+        detail: "Share of the Government Major Projects Portfolio rated likely to succeed. Historic vintage. Do not blend with NISTA 15%.",
         asOf: "2024",
         source: "Infrastructure and Projects Authority",
         href: "https://www.gov.uk/government/organisations/infrastructure-and-projects-authority",
@@ -88,7 +105,7 @@ export const constraints: Constraint[] = [
       text: "Ministerial hire-and-fire of senior officials; 24 departments to 10; the Angliot (public-service academy); procurement revolution.",
     },
     falsifier:
-      "Two years after CS reform, IPA success confidence still in the teens and median time from business case to first output has not fallen.",
+      "Two years after CS reform, NISTA Green share still in the teens and median time from business case to first output has not fallen.",
     unlocks:
       "Every other constraint. Without this, nuclear, prisons, beds, and grid corridors are metabolised by the existing machine.",
     story:
@@ -115,7 +132,7 @@ export const constraints: Constraint[] = [
       "The Progress energy book states it plainly: the grid has become the binding constraint on all new generation. A power station without a connection is a stranded asset.",
       "The old queue grew above 700 GW, about four times what 2030 needs. Shovel-ready projects waited up to ten years. NESO reform reordered names. It did not pour concrete.",
       "Transmission projects still take 12 to 14 years (Winser review). Wind farms can be built in less than half that.",
-      "The demand queue is a second hopper. About 50 GW of data centres sit at transmission alone. A port or mill can be offered a connection in 2040.",
+      "The demand queue is a second hopper. Contracted demand rose to 125 GW by June 2025, of which about 73 GW was data centres. A port or mill can still be offered a connection in 2040.",
     ],
     metrics: [
       {
@@ -142,11 +159,19 @@ export const constraints: Constraint[] = [
         href: "https://solargridcheck.co.uk/uk-grid-connection-queue",
       },
       {
-        label: "Data-centre demand queue",
-        value: "~50 GW",
-        detail: "Transmission only. Combined transmission and distribution demand was about 125 GW by mid-2025.",
+        label: "NESO old queue",
+        value: ">700 GW",
+        detail: "Official NESO line: four times what 2030 needs. Shovel-ready waits of up to 10 years. Reform reorders names; it does not pour concrete.",
+        asOf: "2025-26 reform",
+        source: "NESO Connections Reform Results",
+        href: "https://www.neso.energy/industry-information/connections-reform/connections-reform-results",
+      },
+      {
+        label: "Contracted demand (T+D)",
+        value: "125 GW",
+        detail: "Rose from 41 GW (Nov 2024) to 125 GW (Jun 2025). About 315 data centres accounted for 73 GW of that surge. GB peak demand was about 45 GW in 2025.",
         asOf: "Jun 2025",
-        source: "DESNZ consultation on accelerating demand connections",
+        source: "Ofgem / DESNZ demand-connections commentary",
         href: "https://www.gov.uk/government/consultations/accelerating-electricity-network-connections-for-strategic-demand",
       },
       {
@@ -181,21 +206,47 @@ export const constraints: Constraint[] = [
     status: "tight",
     slot: "Consent. Judicial review. The years between a shovel-ready scheme and a lawful start on site.",
     hero: {
-      label: "Strategic transmission",
-      value: "12-14 years",
-      detail: "Not because towers take a decade to plant. Planning, consultation, land, and review do.",
-      asOf: "2023",
-      source: "Winser / Electricity Networks Commissioner",
-      href: "https://www.gov.uk/government/publications/electricity-networks-commissioner-letter-to-the-secretary-of-state",
+      label: "Homes granted full consent",
+      value: "186,000",
+      detail:
+        "Year to Q1 2026 (Savills / Glenigan / HBF). Labour's 1.5 million this parliament implies about 300,000 a year. Consents are the lawful-yes slot. Transmission still takes 12-14 years for the same reason.",
+      asOf: "YE Q1 2026",
+      source: "Savills English Housing Supply Q1 2026",
+      href: "https://www.savills.com/research_articles/255800/390806-0",
     },
     throughput: "Homes started, nuclear sites prepared, colleges and zones stood up, corridors built.",
     test: "If we doubled Help to Buy and left consent times unchanged, would Britain build the houses? No.",
     why: [
       "Progress calls the planning system more destructive than tax and more costly than the regulatory burden. Every energy site, prosperity zone, training college, and transmission corridor waits here.",
+      "Savills: about 186,000 homes gained full consent in the year to Q1 2026. MHCLG building-control completions were 143,110 in the year to 31 Mar 2026. Estimated net additional homes this parliament (9 Jul 2024 to 14 Jun 2026): 392,400 against a 1.5 million target.",
       "Brick, labour, and capital are not the scarce resource relative to a lawful yes. The default is no.",
       "Judicial review turns a consent into another lottery. Silent class changes in documents are banned inside Progress; the country has the opposite problem: a consent that is never final.",
     ],
     metrics: [
+      {
+        label: "Full planning consents",
+        value: "186,000",
+        detail: "Homes gaining consent, year to Q1 2026. Six of nine English regions consented fewer homes than they completed.",
+        asOf: "YE Q1 2026",
+        source: "Savills / Glenigan / HBF",
+        href: "https://www.savills.com/research_articles/255800/390806-0",
+      },
+      {
+        label: "New-build completions (building control)",
+        value: "143,110",
+        detail: "England, year to 31 Mar 2026. Down 6% on the previous year. Starts 130,170.",
+        asOf: "YE 31 Mar 2026",
+        source: "MHCLG housing supply indicators",
+        href: "https://www.gov.uk/government/statistics/housing-supply-indicators-of-new-supply-england-january-to-march-2026/housing-supply-indicators-of-new-supply-england-january-to-march-2026",
+      },
+      {
+        label: "Net additional this parliament",
+        value: "392,400",
+        detail: "9 Jul 2024 to 14 Jun 2026. Estimated from EPCs adjusted for demolitions. Target: 1.5 million.",
+        asOf: "14 Jun 2026",
+        source: "MHCLG",
+        href: "https://www.gov.uk/government/statistics/housing-supply-indicators-of-new-supply-england-january-to-march-2026/housing-supply-indicators-of-new-supply-england-january-to-march-2026",
+      },
       {
         label: "Transmission consent-to-build",
         value: "12-14 years",
@@ -206,10 +257,10 @@ export const constraints: Constraint[] = [
       {
         label: "Labour housing target",
         value: "1.5 million",
-        detail: "Full Fact: appears off track (Aug 2026). Output wish sitting on this constraint.",
+        detail: "Output wish sitting on this constraint.",
         asOf: "Aug 2026",
-        source: "Full Fact Government Tracker",
-        href: "https://fullfact.org/government-tracker/1-5-million-homes/",
+        source: "MHCLG / government target",
+        href: "https://www.gov.uk/government/statistics/housing-supply-indicators-of-new-supply-england-january-to-march-2026/housing-supply-indicators-of-new-supply-england-january-to-march-2026",
       },
     ],
     symptom: {
@@ -393,7 +444,7 @@ export const constraints: Constraint[] = [
     hero: {
       label: "Overnight G&A occupancy",
       value: "92.5%",
-      detail: "102,423 available general and acute beds; 94,737 occupied. Q4 2025/26. Progress cap: 90%. Target beds: 120,000.",
+      detail: "102,423 available general and acute beds; 94,737 occupied. Q4 2025/26 (Jan-Mar 2026). Progress cap: 90%. Target beds: 120,000.",
       asOf: "Q4 2025/26",
       source: "NHS England KH03 / Nuffield Trust",
       href: "https://www.nuffieldtrust.org.uk/resource/hospital-bed-occupancy",
@@ -576,6 +627,21 @@ export const symptoms = [
     name: "Net migration headline",
     is: "A mix of work, study, and asylum",
     behind: "returns",
+  },
+  {
+    name: "Water for 420,000 of 1.5 million homes",
+    is: "A regional slot, and often planning of reservoirs in disguise",
+    behind: "planning",
+  },
+  {
+    name: "Lowest-G7 investment share of GDP",
+    is: "An output. Firms do not pour concrete into a 2035 connection date.",
+    behind: "planning",
+  },
+  {
+    name: "9.1 million economically inactive",
+    is: "A mix of students, carers, early retirement, and long-term sickness. Not one physical slot.",
+    behind: "acute-beds",
   },
 ];
 

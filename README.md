@@ -1,6 +1,6 @@
 # The Operating Picture
 
-Britain's binding constraints. A public diagnosis of the physical slots that throttle throughput: state hardware, grid connections, planning, firm power, prison places, hospital beds, and returns.
+Britain's binding constraints. A public diagnosis of the physical slots that throttle throughput. Ranked five: state hardware, planning, grid connections, firm power, and hospital beds. Prison places and returns are adjacent hoppers.
 
 Not a hotel map. Not a manifesto tick-list.
 
@@ -17,4 +17,9 @@ GitHub `francoisolwage/operating-picture` → Vercel team `francois-olwages-proj
 
 ## Data
 
-Sourced, dated figures live in `src/data/constraints.ts`. Refresh vintages. Do not blend years.
+Sourced, dated figures live in `src/data/constraints.ts`. Ranking lives in `src/lib/rank.ts` and is used by the homepage. Refresh vintages. Do not blend years.
+
+```bash
+npm test
+npm run build
+```

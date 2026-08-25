@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s - The Operating Picture",
   },
   description:
-    "A live diagnosis of the physical slots that throttle Britain: grid connections, planning, firm power, prison places, hospital beds, returns, and state hardware. Not a hotel map. Not a manifesto tick-list.",
+    "A live diagnosis of the physical slots that throttle Britain: state hardware, planning, grid connections, firm power, and hospital beds. Not a hotel map. Not a manifesto tick-list.",
   openGraph: {
     title: "The Operating Picture",
     description:

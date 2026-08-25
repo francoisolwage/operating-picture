@@ -2,7 +2,13 @@ import Link from "next/link";
 import type { Constraint } from "@/data/constraints";
 import { StatusPill } from "./StatusPill";
 
-export function ConstraintCard({ c }: { c: Constraint }) {
+export function ConstraintCard({
+  c,
+  badge,
+}: {
+  c: Constraint;
+  badge?: string;
+}) {
   return (
     <Link
       href={`/constraints/${c.slug}`}
@@ -10,7 +16,7 @@ export function ConstraintCard({ c }: { c: Constraint }) {
     >
       <div className="flex items-start justify-between gap-3">
         <p className="text-xs tracking-widest text-muted uppercase">
-          {String(c.order).padStart(2, "0")}
+          {badge ?? String(c.order).padStart(2, "0")}
         </p>
         <StatusPill status={c.status} />
       </div>

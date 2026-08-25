@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { StatusPill } from "@/components/StatusPill";
 import { constraints, getConstraint } from "@/data/constraints";
+import { rankLabel, rankedRoots } from "@/lib/picture";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -24,18 +25,32 @@ export default async function ConstraintPage({ params }: Props) {
   const c = getConstraint(slug);
   if (!c) notFound();
 
-  const others = constraints.filter((x) => x.slug !== c.slug);
+  const roots = rankedRoots();
+  const others = [
+    ...roots,
+    ...constraints.filter((x) => !roots.some((r) => r.slug === x.slug)),
+  ].filter((x) => x.slug !== c.slug);
+  const label = rankLabel(c.slug);
 
   return (
     <article className="mx-auto max-w-3xl px-5 py-12 sm:py-16">
       <p className="text-xs tracking-[0.2em] text-gold uppercase">
-        Constraint {String(c.order).padStart(2, "0")}
+        {label.kind === "root"
+          ? `National ${String(label.order).padStart(2, "0")}`
+          : `Adjacent hopper`}
       </p>
       <div className="mt-3">
         <StatusPill status={c.status} />
       </div>
       <h1 className="mt-5 text-4xl sm:text-5xl">{c.name}</h1>
       <p className="mt-4 text-lg leading-relaxed text-muted">{c.slot}</p>
+      {label.kind === "adjacent" ? (
+        <p className="mt-4 rounded-2xl border border-line p-4 text-sm leading-relaxed text-muted">
+          Adjacent hopper. A real slot in its own system. It did not pass the
+          national doubling test against homes, megawatts, and treated
+          patients, so it is not one of the five roots.
+        </p>
+      ) : null}
 
       <section className="mt-10 rounded-2xl border border-line p-6">
         <p className="text-xs tracking-widest text-muted uppercase">The number</p>
