@@ -16,11 +16,11 @@ export const metadata: Metadata = {
     template: "%s - The Operating Picture",
   },
   description:
-    "A live diagnosis of the physical slots that throttle Britain: state hardware, planning, grid connections, firm power, and hospital beds. Not a hotel map. Not a manifesto tick-list.",
+    "A mill is waiting on a plug. A nurse is waiting on a bed. Five physical slots throttle Britain: hardware, planning, grid, firm power, and hospital beds.",
   openGraph: {
     title: "The Operating Picture",
     description:
-      "Britain's binding constraints. Watch the slot that is at 100%, not the queue it produces.",
+      "A mill is waiting on a plug. A nurse is waiting on a bed. Watch the slot that is at 100%.",
     type: "website",
   },
 };

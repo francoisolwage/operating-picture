@@ -61,6 +61,7 @@ export default async function ConstraintPage({ params }: Props) {
         {c.hero.detail ? (
           <p className="mt-3 leading-relaxed text-muted">{c.hero.detail}</p>
         ) : null}
+        <p className="mt-4 leading-relaxed">{c.means}</p>
         <p className="mt-3 text-sm text-muted">
           As of {c.hero.asOf}.{" "}
           <a

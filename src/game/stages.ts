@@ -68,7 +68,7 @@ const SKINS: Record<string, Skin> = {
     protagonist: "Anwen again, same mill",
     waiting: "A price that can beat Dunkirk",
     brief:
-      "She is not competing on wages. She is competing on 26p versus 13p. Wind in a queue does not replace a dying AGR. Put firm power on the system.",
+      "She is competing with Dunkirk on the electricity bill, about twice the French rate. Wind in a queue does not replace a dying AGR. Cheap overnight power is the night shift, the foundry, the data hall. Put firm power on the system.",
     how: "E1.1 cracks the slot. A wholesale-spike row is weather. It fills the hopper.",
     win: "The bill moves. The order book can stay in Britain.",
     lose: "France still eats the contract. The mill pays 26p.",

@@ -17,6 +17,8 @@ export type Constraint = {
   status: ConstraintStatus;
   slot: string;
   hero: Metric;
+  hook: string;
+  means: string;
   throughput: string;
   test: string;
   why: string[];
@@ -38,6 +40,8 @@ export const constraints: Constraint[] = [
     shortName: "Hardware",
     status: "tight",
     slot: "The civil service cannot hire, fire, merge, or finish a major project at the speed the rest of the programme requires.",
+    hook: "A factory can wait ten years for a plug because nobody can hire the engineer who forces the corridor through, or fire the blockage.",
+    means: "15 in 100 major projects are rated likely to succeed. The rest sit amber or red on a £924bn book. More strategy units will not pour concrete.",
     hero: {
       label: "Major projects rated Green",
       value: "15%",
@@ -118,6 +122,8 @@ export const constraints: Constraint[] = [
     shortName: "Grid",
     status: "tight",
     slot: "A physical connection to the transmission system. Ready projects wait years. Names on a queue are not megawatts.",
+    hook: "The mill has the kit in the yard. The offer date is 2035. The network is already there.",
+    means: "737 GW of names on a list. 85 GW actually built. A wind farm in a press release does not light a foundry.",
     hero: {
       label: "Contracted vs built",
       value: "737 GW / 85 GW",
@@ -205,6 +211,8 @@ export const constraints: Constraint[] = [
     shortName: "Planning",
     status: "tight",
     slot: "Consent. Judicial review. The years between a shovel-ready scheme and a lawful start on site.",
+    hook: "The bricks are on the lorry. The lawful yes is not. Help to Buy cannot stamp a form.",
+    means: "About 186,000 homes got a full consent last year. The 1.5 million target implies about 300,000 a year. Six of nine regions consented fewer homes than they finished.",
     hero: {
       label: "Homes granted full consent",
       value: "186,000",
@@ -286,12 +294,14 @@ export const constraints: Constraint[] = [
     shortName: "Power",
     status: "tight",
     slot: "Dispatchable gigawatts that run when the wind does not. Nuclear is collapsing this decade. The bill is the highest in the industrial world.",
+    hook: "A mill in Port Talbot is competing with Dunkirk on the electricity bill, not the wage packet.",
+    means: "British factories pay about twice what French ones pay for power. That is why steel walks, data centres look at Ireland, greenhouses go dark, and a tin of beans cannot cost 5p. Cheap overnight electricity is heat, steel, servers, EV charging, and the night shift.",
     hero: {
-      label: "UK industrial electricity",
-      value: "26.63p/kWh",
-      detail: "Highest in the IEA (2024). 125% above the EU-14 median of 11.25p. France 12-14p. US 6-7p.",
+      label: "Factory power vs France",
+      value: "About 2×",
+      detail: "UK industry paid 26.63p/kWh in 2024, IEA-worst. France 12-14p. US 6-7p. A mill here is paying Dunkirk's bill twice.",
       asOf: "2024",
-      source: "IEA / DESNZ international industrial energy prices (Progress E1)",
+      source: "IEA / DESNZ international industrial energy prices",
       href: "https://www.gov.uk/government/statistical-data-sets/international-industrial-energy-prices",
     },
     throughput: "Steel, chemicals, data centres, and household real wages. Energy is not a sector. Energy is the economy.",
@@ -301,8 +311,17 @@ export const constraints: Constraint[] = [
       "Operable nuclear capacity is about 5.9 GW. Most AGRs retire by 2030. Sizewell B (1.2 GW) is the remainder until new build arrives. Hinkley Point C is late and dear.",
       "Levies (CPS, CfD, RO, standing charges) are the immediate bind on the bill: £150-200 on a typical household and 20-30% on industrial prices. Firm power is the structural bind.",
       "British steel has paid an estimated £845 million more than French rivals since 2016/17 for equivalent output. Energy-intensive manufacturing is down about a third since 2021.",
+      "Cheap firm power is what you do with it: run a mill on the night shift, keep a foundry hot, put a data centre in Britain instead of Dublin, heat a greenhouse in February, charge a depot of vans, desalinate, recycle, and make the 5p tin of beans a machine instead of a slogan.",
     ],
     metrics: [
+      {
+        label: "UK vs France (industry)",
+        value: "About 2×",
+        detail: "26.63p/kWh here, 12-14p there (2024). The mill feels it as lost orders, not as a unit rate.",
+        asOf: "2024",
+        source: "IEA / DESNZ",
+        href: "https://www.gov.uk/government/statistical-data-sets/international-industrial-energy-prices",
+      },
       {
         label: "Industrial price (UK)",
         value: "26.63p/kWh",
@@ -355,7 +374,7 @@ export const constraints: Constraint[] = [
     unlocks:
       "Reindustrialisation, data centres in Britain, and the 5p Heinz machine: when power is cheap, everything else can be.",
     story:
-      "A mill in Port Talbot is not competing with a mill in Dunkirk on wages. It is competing on 26p versus 13p.",
+      "A mill in Port Talbot is competing with Dunkirk on 26p versus 13p, not on wages.",
   },
   {
     slug: "prison-places",
@@ -364,6 +383,8 @@ export const constraints: Constraint[] = [
     shortName: "Cells",
     status: "tight",
     slot: "A usable cell. Police can fill a hopper the rest of the system cannot empty.",
+    hook: "A magistrate can write a sentence. A full estate writes an early-release scheme.",
+    means: "85,858 people in 89,120 places, 96% full. More police without cells is a revolving door.",
     hero: {
       label: "Population vs operational capacity",
       value: "85,858 / 89,120",
@@ -441,6 +462,8 @@ export const constraints: Constraint[] = [
     shortName: "Beds",
     status: "tight",
     slot: "A general and acute bed that is empty tonight. Occupancy above 90% plus people who no longer meet the criteria to reside.",
+    hook: "Tuesday's patient was ready to go home. The bed is still taken. The night sister has no empty bay.",
+    means: "13,750 people a day ready to leave and still in the ward. Extra appointments cannot clear a corridor. That is about one in ten beds.",
     hero: {
       label: "Overnight G&A occupancy",
       value: "92.5%",
@@ -518,6 +541,8 @@ export const constraints: Constraint[] = [
     shortName: "Returns",
     status: "tight",
     slot: "An enforced removal: agreement, documents, detention, a flight. Hotels and boats are stock of people not returned.",
+    hook: "A hotel is a warehouse for a return that did not happen.",
+    means: "9,679 enforced returns in a year against about 36,000 small-boat arrivals. About 4% of 2018-2025 boat arrivals had been returned by end-2025.",
     hero: {
       label: "Enforced returns, year to Jul 2026",
       value: "9,679",

@@ -15,40 +15,80 @@ export default function Home() {
         Snapshot {SNAPSHOT_DATE}
       </p>
       <h1 className="mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">
-        Britain is not short of plans. It is short of slots.
+        A mill is waiting on a plug. A nurse is waiting on a bed.
       </h1>
-      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-        A system has a bottleneck. Throughput is set by the resource that is
-        already at 100%. Waiting lists, boats, and hotel maps are inventory.
-        This picture watches the constraint that produces them.
+      <p className="mt-6 max-w-2xl text-lg leading-relaxed">
+        The kit is in the yard in Port Talbot. The offer date is 2035. Tuesday&apos;s
+        patient was ready to go home and still has the bay. Five slots in
+        Britain sit at 100%. Homes, power, and treated patients only move when
+        those slots crack.
       </p>
-      <p className="mt-4 max-w-2xl leading-relaxed">
-        Test: if we doubled this tomorrow, would megawatts, homes, or treated
-        patients actually rise? If not, it is a symptom. Ranked quarterly.
-        Five national roots. Two adjacent hoppers.
+      <p className="mt-4 max-w-2xl leading-relaxed text-muted">
+        Waiting lists, boats, and hotel maps are the queue you can already
+        share. This picture watches the constraint that produces them.
       </p>
 
-      <p className="mt-8">
+      <dl className="mt-10 grid gap-4 sm:grid-cols-3">
+        <div className="rounded-2xl border border-line p-4">
+          <dt className="text-xs tracking-widest text-muted uppercase">
+            Names on the grid
+          </dt>
+          <dd className="mt-2 font-[family-name:var(--font-source)] text-3xl">
+            737 GW
+          </dd>
+          <p className="mt-1 text-sm text-muted">85 GW actually built</p>
+        </div>
+        <div className="rounded-2xl border border-line p-4">
+          <dt className="text-xs tracking-widest text-muted uppercase">
+            Factory power
+          </dt>
+          <dd className="mt-2 font-[family-name:var(--font-source)] text-3xl">
+            2× France
+          </dd>
+          <p className="mt-1 text-sm text-muted">
+            A mill competing on the bill, not the wage
+          </p>
+        </div>
+        <div className="rounded-2xl border border-line p-4">
+          <dt className="text-xs tracking-widest text-muted uppercase">
+            Ready to leave, still in
+          </dt>
+          <dd className="mt-2 font-[family-name:var(--font-source)] text-3xl">
+            13,750
+          </dd>
+          <p className="mt-1 text-sm text-muted">People a day occupying a bed</p>
+        </div>
+      </dl>
+
+      <div className="mt-8 flex flex-wrap gap-3">
         <Link
           href="/play"
           className="inline-flex rounded-full bg-ink px-5 py-3 text-sm text-paper"
         >
           Play the parliament
         </Link>
-      </p>
+        <a
+          href="#roots"
+          className="inline-flex rounded-full border border-line px-5 py-3 text-sm"
+        >
+          The five slots
+        </a>
+      </div>
 
-      <div className="mt-12">
+      <div className="mt-14">
         <WireMap />
       </div>
 
-      <h2 className="mt-16 text-2xl">Five roots</h2>
+      <h2 id="roots" className="mt-16 scroll-mt-8 text-2xl">
+        Five roots
+      </h2>
       <p className="mt-2 max-w-2xl text-muted">
-        Ranked by tightness, national scope, and how many other slots sit
-        underneath. Hardware is the meta-constraint. Planning and the grid slot
-        bind building and power. Firm power binds the industrial bill. Beds
-        bind NHS flow.
+        Each card is a person and a full slot. Hardware sits above the rest.
+        Planning and the grid bind building and power. Cheap firm power is
+        what you do with it: steel, servers, heat, the night shift. Beds bind
+        NHS flow.
       </p>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2">
         {roots.map((c) => (
           <ConstraintCard key={c.slug} c={c} badge={`National ${String(c.order).padStart(2, "0")}`} />
         ))}
@@ -68,8 +108,8 @@ export default function Home() {
 
       <h2 className="mt-16 text-2xl">Considered, not ranked</h2>
       <p className="mt-2 max-w-2xl text-muted">
-        Each was scored. None replaced a root. The method is allowed to change
-        the map next quarter if the numbers move.
+        Each was scored. None replaced a root. The map is allowed to change
+        next quarter if the numbers move.
       </p>
       <ul className="mt-8 divide-y divide-line border-y border-line">
         {CONSIDERED.map((item) => (

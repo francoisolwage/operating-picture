@@ -25,7 +25,11 @@ export function ConstraintCard({
         {c.hero.value}
       </p>
       <p className="mt-1 text-sm text-muted">{c.hero.label}</p>
-      <p className="mt-4 text-sm leading-relaxed text-ink/90">{c.slot}</p>
+      <p className="mt-4 text-sm leading-relaxed">{c.hook}</p>
+      <p className="mt-3 text-sm leading-relaxed text-muted">{c.means}</p>
+      <p className="mt-3 text-sm leading-relaxed text-ink/80">
+        If it broke: {c.unlocks}
+      </p>
       <p className="mt-auto pt-5 text-sm text-gold group-hover:underline">
         Open the slot
       </p>
