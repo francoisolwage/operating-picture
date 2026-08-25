@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Campaign } from "@/components/game/Campaign";
 
 export const metadata: Metadata = {
-  title: "Break the Slot",
+  title: "One parliament",
   description:
-    "Arcade boss rush: smash Britain's five binding constraints with the right instrument. Symptoms bounce.",
+    "Five people wait on five slots. Stamp the gold plate with the instrument. Symptoms bounce.",
 };
 
 export default function PlayPage() {

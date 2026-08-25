@@ -33,7 +33,7 @@ export default function Home() {
           href="/play"
           className="inline-flex rounded-full bg-ink px-5 py-3 text-sm text-paper"
         >
-          Break the Slot
+          Play the parliament
         </Link>
       </p>
 

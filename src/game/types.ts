@@ -1,29 +1,30 @@
 export const WORLD = { w: 1000, h: 720 } as const;
 
 export const RULES = {
-  playerSpeed: 460,
-  playerW: 86,
-  playerH: 22,
+  playerSpeed: 480,
+  playerW: 96,
+  playerH: 26,
   playerY: 640,
-  shotSpeed: 780,
-  shotW: 18,
-  shotH: 28,
-  fireCooldown: 0.28,
-  instrumentDamage: 11,
-  glanceScale: 0.35,
-  symptomQueue: 14,
-  paperQueue: 9,
-  paperSpawn: 1.15,
-  paperSpeed: 165,
-  paperW: 46,
-  paperH: 58,
+  shotSpeed: 720,
+  shotW: 20,
+  shotH: 30,
+  fireCooldown: 0.3,
+  instrumentDamage: 12,
+  symptomQueue: 12,
+  paperQueue: 8,
+  paperSpawn: 1.35,
+  paperSpeed: 140,
+  paperW: 52,
+  paperH: 62,
   queueCap: 100,
-  slotW: 168,
-  slotH: 52,
-  slotY: 86,
-  slotSpeed: 105,
-  wallTop: 48,
-  wallBottom: 148,
+  slotW: 210,
+  slotH: 58,
+  slotY: 82,
+  slotSpeed: 78,
+  teachSlotSpeed: 42,
+  wallTop: 44,
+  wallBottom: 152,
+  aimAssist: 2.2,
 } as const;
 
 export type CardKind = "instrument" | "symptom";
@@ -44,7 +45,10 @@ export type Paper = {
   x: number;
   y: number;
   vy: number;
+  label: string;
 };
+
+export type Tempo = "teach" | "full";
 
 export type StageDef = {
   slug: string;
@@ -59,6 +63,13 @@ export type StageDef = {
   unitLabel: string;
   perHit: number;
   cards: Card[];
+  tempo: Tempo;
+  protagonist: string;
+  waiting: string;
+  brief: string;
+  how: string;
+  win: string;
+  lose: string;
 };
 
 export type MatchStatus = "playing" | "won" | "lost" | "paused";
@@ -82,6 +93,7 @@ export type GameState = {
   symptomHits: number;
   papersHit: number;
   shake: number;
+  coach: string;
 };
 
 export type Input = {
@@ -93,9 +105,9 @@ export type Input = {
 };
 
 export type GameEvent =
-  | { type: "slot-hit"; kind: CardKind; damage: number }
-  | { type: "bounce" }
-  | { type: "paper-hit" }
+  | { type: "slot-hit"; kind: CardKind; damage: number; coach: string }
+  | { type: "bounce"; coach: string }
+  | { type: "paper-hit"; coach: string }
   | { type: "fire"; kind: CardKind }
   | { type: "win" }
   | { type: "lose" }

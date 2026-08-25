@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { campaignStages } from "./stages.ts";
-import { matchScore, shareLine, startStage, step } from "./sim.ts";
+import { instrumentIndex, matchScore, shareLine, startStage, step } from "./sim.ts";
 import { RULES, WORLD, type Input, type StageDef } from "./types.ts";
 import { productionTopSlugs } from "../lib/picture.ts";
 
@@ -19,9 +19,16 @@ const fixture: StageDef = {
   perHit: 1000,
   cards: [
     { kind: "instrument", label: "Default yes", code: "E4" },
-    { kind: "symptom", label: "Housing target", code: "SYMP" },
-    { kind: "symptom", label: "Help to Buy", code: "SYMP" },
+    { kind: "symptom", label: "Housing target", code: "TRAP" },
+    { kind: "symptom", label: "Help to Buy", code: "TRAP" },
   ],
+  tempo: "full",
+  protagonist: "Dev, small builder",
+  waiting: "A lawful yes",
+  brief: "The bricks are on the lorry.",
+  how: "Stamp E4 on the plate.",
+  win: "A yes.",
+  lose: "No start.",
 };
 
 const idle: Input = { left: false, right: false, fire: false };
@@ -59,7 +66,15 @@ describe("campaign stages", () => {
       const instruments = stage.cards.filter((c) => c.kind === "instrument");
       assert.equal(instruments.length, 1, stage.slug);
       assert.equal(stage.cards.length, 3);
+      assert.ok(stage.protagonist.length > 0, stage.slug);
+      assert.ok(stage.brief.length > 0, stage.slug);
     }
+  });
+
+  it("teaches on the first chapter and goes full after", () => {
+    const stages = campaignStages();
+    assert.equal(stages[0].tempo, "teach");
+    assert.ok(stages.slice(1).every((s) => s.tempo === "full"));
   });
 
   it("can break every campaign stage with instruments only", () => {
@@ -89,6 +104,13 @@ describe("campaign stages", () => {
 });
 
 describe("combat", () => {
+  it("starts with the instrument already selected", () => {
+    const s = startStage(fixture);
+    assert.equal(s.stage.cards[s.selected].kind, "instrument");
+    assert.equal(s.selected, instrumentIndex(s.stage.cards));
+    assert.match(s.coach, /stamp/i);
+  });
+
   it("instrument hit on the slot lowers tightness and raises throughput", () => {
     const before = startStage(fixture);
     const { state, events } = hitSlot(before, "instrument");
@@ -105,6 +127,7 @@ describe("combat", () => {
     assert.equal(state.tightness, before.tightness);
     assert.ok(state.queue > before.queue);
     assert.equal(state.symptomHits, 1);
+    assert.match(state.coach, /inventory/i);
   });
 
   it("firing only symptoms never wins the stage", () => {
@@ -141,10 +164,26 @@ describe("combat", () => {
     assert.equal(s.stage.cards.length, 3);
   });
 
+  it("holds papers in the teach chapter until the first stamp", () => {
+    const teach = { ...fixture, tempo: "teach" as const, slug: "state-hardware" };
+    let s = startStage(teach);
+    s = { ...s, paperTimer: 0 };
+    const r = step(s, idle, 0.5);
+    assert.equal(r.state.papers.length, 0);
+    const afterHit = hitSlot(r.state, "instrument").state;
+    let s2 = { ...afterHit, paperTimer: 0, papers: [] };
+    const r2 = step(s2, idle, 0.2);
+    assert.ok(r2.state.papers.length >= 1);
+  });
+
   it("queue at cap loses", () => {
     const s = startStage(fixture);
     const r = step(
-      { ...s, queue: RULES.queueCap - 1, papers: [{ x: s.playerX, y: RULES.playerY, vy: 0 }] },
+      {
+        ...s,
+        queue: RULES.queueCap - 1,
+        papers: [{ x: s.playerX, y: RULES.playerY, vy: 0, label: "Policy paper" }],
+      },
       idle,
       0.05,
     );
@@ -157,7 +196,7 @@ describe("combat", () => {
     const r = step(
       {
         ...s,
-        papers: [{ x: 20, y: 400, vy: 10 }],
+        papers: [{ x: 20, y: 400, vy: 10, label: "Target" }],
         paperTimer: 99,
       },
       idle,

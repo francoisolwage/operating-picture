@@ -13,6 +13,14 @@ type Spark = {
   color: string;
 };
 
+type Floater = {
+  x: number;
+  y: number;
+  text: string;
+  life: number;
+  color: string;
+};
+
 type Props = {
   stage: StageDef;
   paused: boolean;
@@ -46,15 +54,14 @@ function burst(sparks: Spark[], x: number, y: number, color: string, n: number) 
   }
 }
 
-export function GameCanvas({ stage, paused, selected, onSelected, onState, inputRef }: Props) {
+export function GameCanvas({ stage, paused, onSelected, onState, inputRef }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<GameState>(startStage(stage));
   const sparksRef = useRef<Spark[]>([]);
+  const floatersRef = useRef<Floater[]>([]);
   const onStateRef = useRef(onState);
-  const selectedRef = useRef(selected);
   const pausedRef = useRef(paused);
   onStateRef.current = onState;
-  selectedRef.current = selected;
   pausedRef.current = paused;
 
   useEffect(() => {
@@ -137,26 +144,36 @@ export function GameCanvas({ stage, paused, selected, onSelected, onState, input
         ctx.fillRect(s.slotX - 20, RULES.wallTop - 10, RULES.slotW + 40, 130);
       }
 
+      const pulse = 1 + Math.sin(s.elapsed * 5) * 0.03;
+      const sw = RULES.slotW * pulse;
+      const sh = RULES.slotH * pulse;
+      const sx0 = s.slotX - (sw - RULES.slotW) / 2;
+      const sy0 = RULES.slotY - (sh - RULES.slotH) / 2;
       ctx.fillStyle = s.status === "won" ? EASING : GOLD_FILL;
-      roundRect(ctx, s.slotX, RULES.slotY, RULES.slotW, RULES.slotH, 8);
+      roundRect(ctx, sx0, sy0, sw, sh, 8);
       ctx.fill();
       ctx.strokeStyle = GOLD;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 3;
       ctx.stroke();
       ctx.fillStyle = PAPER;
       ctx.font = "600 13px Georgia, serif";
       ctx.textAlign = "center";
-      ctx.fillText("THE SLOT", s.slotX + RULES.slotW / 2, RULES.slotY + 22);
-      ctx.font = "700 16px Georgia, serif";
-      ctx.fillText(`${Math.round(s.tightness)}%`, s.slotX + RULES.slotW / 2, RULES.slotY + 40);
+      ctx.fillText("AIM HERE", s.slotX + RULES.slotW / 2, RULES.slotY + 20);
+      ctx.font = "700 18px Georgia, serif";
+      ctx.fillText(`${Math.round(s.tightness)}% full`, s.slotX + RULES.slotW / 2, RULES.slotY + 42);
+      if (s.stage.tempo === "teach" && s.instrumentHits === 0) {
+        ctx.fillStyle = GOLD;
+        ctx.font = "600 16px Georgia, serif";
+        ctx.fillText("Stamp this plate", s.slotX + RULES.slotW / 2, RULES.slotY + 78);
+      }
 
       ctx.fillStyle = PAPER;
-      ctx.font = "700 22px Georgia, serif";
+      ctx.font = "700 20px Georgia, serif";
       ctx.textAlign = "left";
-      ctx.fillText(s.stage.name, 36, RULES.wallTop + 28);
+      ctx.fillText(s.stage.protagonist, 36, RULES.wallTop + 28);
       ctx.font = "14px Georgia, serif";
       ctx.fillStyle = LINE;
-      ctx.fillText(s.stage.instrumentCode, 36, RULES.wallTop + 50);
+      ctx.fillText(`${s.stage.instrumentCode}  ·  ${s.stage.waiting}`, 36, RULES.wallTop + 50);
 
       for (const p of s.papers) {
         ctx.fillStyle = "#fff";
@@ -164,15 +181,10 @@ export function GameCanvas({ stage, paused, selected, onSelected, onState, input
         ctx.lineWidth = 1;
         ctx.fillRect(p.x, p.y, RULES.paperW, RULES.paperH);
         ctx.strokeRect(p.x, p.y, RULES.paperW, RULES.paperH);
-        ctx.strokeStyle = MUTED;
-        ctx.beginPath();
-        ctx.moveTo(p.x + 8, p.y + 14);
-        ctx.lineTo(p.x + RULES.paperW - 8, p.y + 14);
-        ctx.moveTo(p.x + 8, p.y + 24);
-        ctx.lineTo(p.x + RULES.paperW - 14, p.y + 24);
-        ctx.moveTo(p.x + 8, p.y + 34);
-        ctx.lineTo(p.x + RULES.paperW - 10, p.y + 34);
-        ctx.stroke();
+        ctx.fillStyle = MUTED;
+        ctx.font = "600 9px Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.fillText(p.label, p.x + RULES.paperW / 2, p.y + 34);
       }
 
       for (const shot of s.shots) {
@@ -181,18 +193,27 @@ export function GameCanvas({ stage, paused, selected, onSelected, onState, input
         ctx.fill();
       }
 
-      ctx.fillStyle = GOLD_FILL;
+      const card = s.stage.cards[s.selected];
+      ctx.fillStyle = card.kind === "instrument" ? GOLD_FILL : MUTED;
       roundRect(ctx, s.playerX, RULES.playerY, RULES.playerW, RULES.playerH, 4);
       ctx.fill();
       ctx.fillStyle = INK;
       ctx.font = "700 11px Georgia, serif";
       ctx.textAlign = "center";
-      ctx.fillText("STAMP", s.playerX + RULES.playerW / 2, RULES.playerY + 15);
+      ctx.fillText(card.code, s.playerX + RULES.playerW / 2, RULES.playerY + 17);
 
       for (const sp of sparksRef.current) {
         ctx.globalAlpha = Math.max(0, sp.life * 2);
         ctx.fillStyle = sp.color;
         ctx.fillRect(sp.x, sp.y, 3, 3);
+      }
+      ctx.globalAlpha = 1;
+      for (const f of floatersRef.current) {
+        ctx.globalAlpha = Math.max(0, f.life);
+        ctx.fillStyle = f.color;
+        ctx.font = "700 16px Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.fillText(f.text, f.x, f.y);
       }
       ctx.globalAlpha = 1;
       ctx.restore();
@@ -202,7 +223,7 @@ export function GameCanvas({ stage, paused, selected, onSelected, onState, input
       if (!running) return;
       const dt = Math.min(0.04, (now - last) / 1000);
       last = now;
-      const input = { ...inputRef.current, select: selectedRef.current };
+      const input = { ...inputRef.current };
       const before = stateRef.current.status;
       if (!pausedRef.current && stateRef.current.status === "playing") {
         const { state, events } = step(stateRef.current, input, dt);
@@ -215,6 +236,7 @@ export function GameCanvas({ stage, paused, selected, onSelected, onState, input
       }
       inputRef.current.fire = false;
       inputRef.current.pause = false;
+      inputRef.current.select = undefined;
 
       sparksRef.current = sparksRef.current
         .map((sp) => ({
@@ -224,6 +246,9 @@ export function GameCanvas({ stage, paused, selected, onSelected, onState, input
           life: sp.life - dt,
         }))
         .filter((sp) => sp.life > 0);
+      floatersRef.current = floatersRef.current
+        .map((f) => ({ ...f, y: f.y - 28 * dt, life: f.life - dt }))
+        .filter((f) => f.life > 0);
 
       const cssW = canvas.clientWidth;
       const cssH = canvas.clientHeight;
@@ -238,9 +263,23 @@ export function GameCanvas({ stage, paused, selected, onSelected, onState, input
     const applyEvents = (events: GameEvent[], s: GameState) => {
       for (const e of events) {
         if (e.type === "slot-hit") {
-          burst(sparksRef.current, s.slotX + RULES.slotW / 2, RULES.slotY + 26, GOLD, 14);
+          burst(sparksRef.current, s.slotX + RULES.slotW / 2, RULES.slotY + 26, GOLD, 18);
+          floatersRef.current.push({
+            x: s.slotX + RULES.slotW / 2,
+            y: RULES.slotY - 8,
+            text: "Cracked",
+            life: 1.1,
+            color: EASING,
+          });
         } else if (e.type === "bounce") {
-          burst(sparksRef.current, s.slotX + RULES.slotW / 2, RULES.slotY + 26, TIGHT, 10);
+          burst(sparksRef.current, s.slotX + RULES.slotW / 2, RULES.slotY + 26, TIGHT, 12);
+          floatersRef.current.push({
+            x: s.slotX + RULES.slotW / 2,
+            y: RULES.slotY - 8,
+            text: "Inventory",
+            life: 0.9,
+            color: TIGHT,
+          });
         } else if (e.type === "paper-hit") {
           burst(
             sparksRef.current,
