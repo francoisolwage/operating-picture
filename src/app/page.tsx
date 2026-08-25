@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ConstraintCard } from "@/components/ConstraintCard";
 import { WireMap } from "@/components/WireMap";
 import { CONSIDERED } from "@/data/candidates";
@@ -25,6 +26,15 @@ export default function Home() {
         Test: if we doubled this tomorrow, would megawatts, homes, or treated
         patients actually rise? If not, it is a symptom. Ranked quarterly.
         Five national roots. Two adjacent hoppers.
+      </p>
+
+      <p className="mt-8">
+        <Link
+          href="/play"
+          className="inline-flex rounded-full bg-ink px-5 py-3 text-sm text-paper"
+        >
+          Break the Slot
+        </Link>
       </p>
 
       <div className="mt-12">

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const links = [
   { href: "/", label: "Map" },
+  { href: "/play", label: "Play" },
   { href: "/method", label: "Method" },
   { href: "/symptoms", label: "Symptoms" },
   { href: "/sources", label: "Sources" },
@@ -19,7 +20,7 @@ export function Header() {
             Britain&apos;s binding constraints
           </span>
         </Link>
-        <nav className="flex gap-5 text-sm text-muted">
+        <nav className="flex flex-wrap justify-end gap-x-5 gap-y-2 text-sm text-muted">
           {links.map((l) => (
             <Link key={l.href} href={l.href} className="hover:text-ink">
               {l.label}

@@ -4,6 +4,8 @@ Britain's binding constraints. A public diagnosis of the physical slots that thr
 
 Not a hotel map. Not a manifesto tick-list.
 
+Play **Break the Slot** at `/play`: stamp the moving slot with the instrument. Symptoms bounce.
+
 ## Run
 
 ```bash
