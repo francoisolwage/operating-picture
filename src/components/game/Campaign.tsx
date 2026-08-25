@@ -280,6 +280,7 @@ export function Campaign() {
         selected={selected}
         onSelected={pickCard}
         onState={onState}
+        onLive={() => setPaused(false)}
         inputRef={inputRef}
       />
       <Hud
@@ -287,6 +288,7 @@ export function Campaign() {
         selected={selected}
         onSelect={pickCard}
         onFire={() => {
+          setPaused(false);
           inputRef.current.fire = true;
         }}
         onPause={() => setPaused((p) => !p)}

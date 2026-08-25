@@ -27,6 +27,7 @@ type Props = {
   selected: number;
   onSelected: (i: number) => void;
   onState: (s: GameState) => void;
+  onLive?: () => void;
   inputRef: React.MutableRefObject<Input>;
 };
 
@@ -54,14 +55,16 @@ function burst(sparks: Spark[], x: number, y: number, color: string, n: number) 
   }
 }
 
-export function GameCanvas({ stage, paused, onSelected, onState, inputRef }: Props) {
+export function GameCanvas({ stage, paused, onSelected, onState, onLive, inputRef }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<GameState>(startStage(stage));
   const sparksRef = useRef<Spark[]>([]);
   const floatersRef = useRef<Floater[]>([]);
   const onStateRef = useRef(onState);
+  const onLiveRef = useRef(onLive);
   const pausedRef = useRef(paused);
   onStateRef.current = onState;
+  onLiveRef.current = onLive;
   pausedRef.current = paused;
 
   useEffect(() => {
@@ -193,7 +196,7 @@ export function GameCanvas({ stage, paused, onSelected, onState, inputRef }: Pro
         ctx.fill();
       }
 
-      const card = s.stage.cards[s.selected];
+      const card = s.stage.cards[s.selected] ?? s.stage.cards[0];
       ctx.fillStyle = card.kind === "instrument" ? GOLD_FILL : MUTED;
       roundRect(ctx, s.playerX, RULES.playerY, RULES.playerW, RULES.playerH, 4);
       ctx.fill();
@@ -225,6 +228,10 @@ export function GameCanvas({ stage, paused, onSelected, onState, inputRef }: Pro
       last = now;
       const input = { ...inputRef.current };
       const before = stateRef.current.status;
+      if (pausedRef.current && (input.fire || input.left || input.right)) {
+        pausedRef.current = false;
+        onLiveRef.current?.();
+      }
       if (!pausedRef.current && stateRef.current.status === "playing") {
         const { state, events } = step(stateRef.current, input, dt);
         stateRef.current = state;

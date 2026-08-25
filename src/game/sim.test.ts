@@ -148,6 +148,30 @@ describe("combat", () => {
     assert.equal(state.tightness, 0);
   });
 
+  it("a stamp fired from the operator reaches the slot", () => {
+    let s = startStage({ ...fixture, tightness: 90, tempo: "full" });
+    s = {
+      ...s,
+      playerX: s.slotX + RULES.slotW / 2 - RULES.playerW / 2,
+      cooldown: 0,
+      papers: [],
+      paperTimer: 99,
+      selected: instrumentIndex(s.stage.cards),
+    };
+    s = step(s, { ...idle, fire: true }, 0.016).state;
+    assert.ok(s.shots.length >= 1);
+    let hit = false;
+    for (let i = 0; i < 150; i++) {
+      const r = step(s, idle, 0.016);
+      s = r.state;
+      if (r.events.some((e) => e.type === "slot-hit")) {
+        hit = true;
+        break;
+      }
+    }
+    assert.equal(hit, true);
+  });
+
   it("space-fire spawns a shot of the selected card", () => {
     const started = startStage(fixture);
     const i = started.stage.cards.findIndex((c) => c.kind === "symptom");

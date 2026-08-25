@@ -24,7 +24,7 @@ export const RULES = {
   teachSlotSpeed: 42,
   wallTop: 44,
   wallBottom: 152,
-  aimAssist: 2.2,
+  aimAssist: 4,
 } as const;
 
 export type CardKind = "instrument" | "symptom";

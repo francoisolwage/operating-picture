@@ -143,7 +143,7 @@ export function step(state: GameState, input: Input, dt: number): StepResult {
   }
 
   if (input.fire && next.cooldown <= 0) {
-    const card = next.stage.cards[next.selected];
+    const card = next.stage.cards[next.selected] ?? next.stage.cards[0];
     next.shots.push({
       x: next.playerX + RULES.playerW / 2 - RULES.shotW / 2,
       y: RULES.playerY - 10,
@@ -189,7 +189,6 @@ export function step(state: GameState, input: Input, dt: number): StepResult {
       RULES.slotW,
       RULES.slotH,
     );
-    const inWall = shot.y <= RULES.wallBottom && shot.y + RULES.shotH >= RULES.wallTop;
     if (inSlot) {
       if (shot.kind === "instrument") {
         const damage = RULES.instrumentDamage;
@@ -209,9 +208,6 @@ export function step(state: GameState, input: Input, dt: number): StepResult {
         next.coach = coach;
         events.push({ type: "bounce", coach });
       }
-      continue;
-    }
-    if (inWall) {
       continue;
     }
     liveShots.push(shot);
