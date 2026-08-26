@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
   BIND_HIT,
+  WIRE,
   enactPolicy,
   isStalled,
   lockReason,
@@ -10,6 +11,7 @@ import {
   scoreOf,
   startBuilder,
   startProject,
+  worksForSlot,
 } from "./builder.ts";
 
 describe("builder setup", () => {
@@ -103,5 +105,11 @@ describe("stall helper", () => {
     const g = startBuilder(8);
     const intake = PROJECTS.find((p) => p.id === "intake")!;
     assert.equal(isStalled(g, intake), false);
+  });
+
+  it("each wire slot has works you can start from the console", () => {
+    for (const id of WIRE) {
+      assert.ok(worksForSlot(id).length >= 2, id);
+    }
   });
 });

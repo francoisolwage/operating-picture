@@ -30,6 +30,15 @@ html {
   background: var(--paper);
 }
 
+body:has([data-op-console]) {
+  overflow: hidden;
+}
+
+body:has([data-op-console]) > header,
+body:has([data-op-console]) > footer {
+  display: none;
+}
+
 body {
   background: var(--paper);
   color: var(--ink);

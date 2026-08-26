@@ -2,15 +2,11 @@ import type { Metadata } from "next";
 import { Builder } from "@/components/game/Builder";
 
 export const metadata: Metadata = {
-  title: "Parliament builder",
+  title: "Parliament console",
   description:
-    "Build Britain for one parliament. Projects stall on the bind. Restart the mill, raise homes, free a hospital bay.",
+    "Build Britain from the operating console. One screen. The bind stalls the yard.",
 };
 
 export default function PlayPage() {
-  return (
-    <div className="mx-auto max-w-3xl px-5 py-8 sm:py-12">
-      <Builder />
-    </div>
-  );
+  return <Builder />;
 }

@@ -251,6 +251,20 @@ export const PROJECTS: ProjectDef[] = [
   },
 ];
 
+export const SLOT_WORKS: Record<SlotId, string[]> = {
+  "state-hardware": ["intake", "corridor", "connector"],
+  planning: ["town", "ward"],
+  "grid-slot": ["corridor", "connector"],
+  "firm-power": ["reactor", "mill", "hall"],
+  "acute-beds": ["discharge", "ward"],
+};
+
+export function worksForSlot(id: SlotId): ProjectDef[] {
+  return SLOT_WORKS[id]
+    .map((pid) => PROJECTS.find((p) => p.id === pid))
+    .filter((p): p is ProjectDef => Boolean(p));
+}
+
 export const POLICIES: PolicyDef[] = [
   {
     id: "cs1",
