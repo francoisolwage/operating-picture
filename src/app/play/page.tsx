@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Cabinet } from "@/components/game/Cabinet";
+import { Builder } from "@/components/game/Builder";
 
 export const metadata: Metadata = {
-  title: "The cabinet",
+  title: "Parliament builder",
   description:
-    "One parliament. Play instruments on the binding slot. Slogans fill the queue.",
+    "Build Britain for one parliament. Projects stall on the bind. Restart the mill, raise homes, free a hospital bay.",
 };
 
 export default function PlayPage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-8 sm:py-12">
-      <Cabinet />
+      <Builder />
     </div>
   );
 }

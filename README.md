@@ -4,7 +4,7 @@ Britain's binding constraints. A public diagnosis of the physical slots that thr
 
 Not a hotel map. Not a manifesto tick-list.
 
-Play **The Cabinet** at `/play`: one parliament, two moves a year. Play the instrument on the bind. Slogans fill the queue.
+Play the **parliament builder** at `/play`: start works, enact policy, watch the bind stall the yard. Win the mill, the homes, and a free bay.
 
 ## Run
 
