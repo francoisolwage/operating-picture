@@ -265,6 +265,14 @@ export function worksForSlot(id: SlotId): ProjectDef[] {
     .filter((p): p is ProjectDef => Boolean(p));
 }
 
+/** First wire slot that lists this work. Used to seat yard chips. */
+export function homeSlotOf(defId: string): SlotId {
+  for (const id of WIRE) {
+    if (SLOT_WORKS[id].includes(defId)) return id;
+  }
+  return WIRE[0];
+}
+
 export const POLICIES: PolicyDef[] = [
   {
     id: "cs1",
@@ -565,6 +573,17 @@ export function startProject(state: GameState, defId: string): GameState {
       : `${def.name} started. ${def.years} year${def.years === 1 ? "" : "s"}.`,
   );
   return afterAct(next);
+}
+
+/** Close the year and forfeit leftover moves. No-op if not in the act phase. */
+export function clockOut(state: GameState): GameState {
+  if (state.phase !== "act" || state.ap <= 0) return state;
+  const unspent = state.ap;
+  const next = withLog(
+    state,
+    `Year ${state.year} closed with ${unspent} move${unspent === 1 ? "" : "s"} unspent.`,
+  );
+  return tickYear(next);
 }
 
 export function enactPolicy(state: GameState, policyId: string): GameState {

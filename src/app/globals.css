@@ -30,13 +30,98 @@ html {
   background: var(--paper);
 }
 
+html:has([data-op-console]),
 body:has([data-op-console]) {
+  height: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body:has([data-op-console]) > header,
 body:has([data-op-console]) > footer {
   display: none;
+}
+
+@keyframes op-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(196, 152, 90, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 18px 2px rgba(196, 152, 90, 0.18);
+  }
+}
+
+@keyframes op-hit {
+  0% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes op-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes op-stall {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes op-scan {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 8px;
+  }
+}
+
+.op-bind {
+  animation: op-pulse 1.7s ease-in-out infinite;
+}
+
+.op-hit {
+  animation: op-hit 280ms ease-out;
+}
+
+.op-stall {
+  animation: op-stall 0.9s ease-in-out infinite;
+}
+
+.op-pop {
+  animation: op-pop 0.7s ease-out forwards;
+}
+
+.op-scan {
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(244, 246, 241, 0.025) 3px,
+    rgba(244, 246, 241, 0.025) 4px
+  );
+  background-size: 100% 8px;
+  animation: op-scan 0.8s linear infinite;
 }
 
 body {

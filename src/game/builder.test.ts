@@ -3,7 +3,9 @@ import { describe, it } from "node:test";
 import {
   BIND_HIT,
   WIRE,
+  clockOut,
   enactPolicy,
+  homeSlotOf,
   isStalled,
   lockReason,
   PROJECTS,
@@ -111,5 +113,50 @@ describe("stall helper", () => {
     for (const id of WIRE) {
       assert.ok(worksForSlot(id).length >= 2, id);
     }
+  });
+
+  it("corridor chips sit on hardware first", () => {
+    assert.equal(homeSlotOf("corridor"), "state-hardware");
+    assert.equal(homeSlotOf("mill"), "firm-power");
+  });
+});
+
+describe("clock out", () => {
+  it("closes the year with unspent moves", () => {
+    const g0 = startBuilder(9);
+    assert.equal(g0.ap, 3);
+    const g1 = clockOut(g0);
+    assert.equal(g1.year, 2);
+    assert.equal(g1.ap, g1.apMax);
+    assert.match(g1.log.join(" "), /unspent/i);
+  });
+
+  it("does not clock out during an event", () => {
+    const g0 = startBuilder(10);
+    const g1 = clockOut({
+      ...g0,
+      phase: "event",
+      event: { id: "winter", title: "x", body: "y", options: [] },
+    });
+    assert.equal(g1.year, g0.year);
+    assert.equal(g1.phase, "event");
+  });
+
+  it("a stalled corridor does not spend a year when you clock out", () => {
+    let g = startBuilder(11);
+    g = startProject(g, "corridor");
+    const before = g.flights.find((f) => f.defId === "corridor")!;
+    assert.equal(before.stalled, true);
+    g = clockOut(g);
+    const after = g.flights.find((f) => f.defId === "corridor");
+    assert.ok(after);
+    assert.equal(after!.yearsLeft, before.yearsLeft);
+    assert.equal(after!.stalled, true);
+  });
+
+  it("clock out with no moves left is a no-op", () => {
+    const g0 = { ...startBuilder(12), ap: 0 };
+    const g1 = clockOut(g0);
+    assert.equal(g1.year, g0.year);
   });
 });

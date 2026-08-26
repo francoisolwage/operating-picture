@@ -4,7 +4,7 @@ Britain's binding constraints. A public diagnosis of the physical slots that thr
 
 Not a hotel map. Not a manifesto tick-list.
 
-Play the **parliament builder** at `/play`: start works, enact policy, watch the bind stall the yard. Win the mill, the homes, and a free bay.
+Play the **operating console** at `/play`: one screen, no scroll. Stamp the gold bind, start works, watch the yard stall, clock the year. Win the mill, the homes, and a free bay.
 
 ## Run
 

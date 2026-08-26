@@ -65,7 +65,7 @@ export default function Home() {
           href="/play"
           className="inline-flex rounded-full bg-ink px-5 py-3 text-sm text-paper"
         >
-          Play the parliament
+          Play the console
         </Link>
         <a
           href="#roots"
